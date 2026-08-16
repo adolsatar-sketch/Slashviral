@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Slash Target System — نظام تسويقي يبدأ بهدف وينتهي بنتائج</title>
+<meta name="description" content="Slash Target System — نظام تسويقي متكامل يبدأ بتحديد هدف واضح وينتهي بنتائج قابلة للقياس. SCAN → TARGET → STRATEGY → EXECUTE → MEASURE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000000;
+  --bg-raised:#15171f;
+  --bg-panel:#1c1f29;
+  --bg-panel-2:#232635;
+  --text:#ffffff;
+  --text-dim:#cccccc;
+  --text-mute:#7a7d85;
+  --line:rgba(255,255,255,.1);
+  --line-strong:rgba(255,255,255,.2);
+  --accent:#f2cc30;
+  --accent-2:#ffe066;
+  --accent-glow:rgba(242,204,48,.4);
+  --f-display:'Montserrat',sans-serif;
+  --f-body:'Montserrat',sans-serif;
+  --f-mono:'IBM Plex Mono',monospace;
+  --f-ar:'IBM Plex Sans Arabic',sans-serif;
+  --bounce:cubic-bezier(.34,1.56,.64,1);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --wrap:1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+html,body{overflow-x:hidden;max-width:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+[dir="rtl"]{font-family:var(--f-ar);line-height:1.95}
+.ltr{unicode-bidi:isolate;direction:ltr;display:inline-block}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+ul{list-style:none}
+::selection{background:var(--accent);color:#000}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.sec{position:relative;padding:min(12vw,110px) 0}
+.eyebrow{
+  font-family:var(--f-mono);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;
+}
+.eyebrow::before{content:"◎";font-size:12px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
+.h-xl{font-size:clamp(2.5rem,7vw,5rem);line-height:1.0;font-weight:800}
+.h-l{font-size:clamp(1.9rem,4.4vw,3.1rem);line-height:1.05;font-weight:700}
+.h-m{font-size:clamp(1.3rem,2.4vw,1.8rem);font-weight:700}
+.lede{font-family:var(--f-ar);font-size:clamp(1.05rem,1.9vw,1.35rem);color:var(--text);line-height:1.9;font-weight:500}
+.body-ar{font-family:var(--f-ar);color:var(--text-dim);font-size:clamp(1rem,1.5vw,1.1rem);line-height:1.95}
+.dim{color:var(--text-dim)}
+.mute{color:var(--text-mute)}
+.gold{color:var(--accent)}
+.mono{font-family:var(--f-mono)}
+
+.rv{opacity:0;transform:translateY(24px) scale(.98) rotate(var(--r,0deg));transition:opacity .7s var(--bounce),transform .7s var(--bounce);transition-delay:var(--d,0s)}
+.rv.on{opacity:1;transform:translateY(0) scale(1) rotate(var(--r,0deg))}
+:root.rmo .rv{transition:none;opacity:1;transform:none}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:100px;
+  font-family:var(--f-mono);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+  transition:transform .5s var(--bounce),background .3s,color .3s,box-shadow .3s,border-color .3s;
+}
+.btn-gold{background:var(--accent);color:#000}
+.btn-gold:hover{background:var(--accent-2);box-shadow:0 10px 32px var(--accent-glow)}
+.btn-line{border:1.5px solid var(--line-strong);color:var(--text)}
+.btn-line:hover{border-color:var(--accent);color:var(--accent)}
+.btn-arrow{transition:transform .4s var(--bounce)}
+.btn:hover .btn-arrow{transform:translate(3px,-2px) rotate(10deg)}
+[dir="rtl"] .btn-arrow{transform:scaleX(-1)}
+[dir="rtl"] .btn:hover .btn-arrow{transform:scaleX(-1) translate(3px,-2px)}
+
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;mix-blend-mode:overlay}
+#confetti{position:fixed;inset:0;z-index:1600;pointer-events:none}
+
+.cur{
+  position:fixed;top:0;left:0;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--accent);
+  pointer-events:none;z-index:998;transform:translate(-50%,-50%);display:none;
+  transition:width .25s var(--bounce),height .25s var(--bounce),background .25s;
+}
+.cur::before,.cur::after{content:"";position:absolute;background:var(--accent)}
+.cur::before{top:50%;left:-5px;width:4px;height:1.5px;transform:translateY(-50%)}
+.cur::after{top:50%;right:-5px;width:4px;height:1.5px;transform:translateY(-50%)}
+.cur.big{width:56px;height:56px;background:var(--accent-glow)}
+.cur.snap{width:18px;height:18px;background:var(--accent)}
+.has-fine .cur{display:block}
+.has-fine,.has-fine a,.has-fine button{cursor:none}
+
+/* ============ INTRO — SCAN / TARGET / LOCKED ============ */
+.intro{position:fixed;inset:0;z-index:2000;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s var(--ease)}
+.intro.gone{opacity:0;pointer-events:none}
+.intro-ring{position:absolute;width:min(58vw,420px);height:min(58vw,420px);border-radius:50%;border:1px solid rgba(242,204,48,.28)}
+.intro-ring2{position:absolute;width:min(38vw,280px);height:min(38vw,280px);border-radius:50%;border:1px solid rgba(242,204,48,.4)}
+.intro-word{
+  font-family:var(--f-mono);font-weight:700;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;
+  font-size:clamp(1.6rem,7vw,3.2rem);transform:scale(.4);opacity:0;
+}
+.intro-word.pop{animation:ipop .7s var(--bounce) forwards}
+@keyframes ipop{0%{transform:scale(.3);opacity:0}45%{transform:scale(1.1);opacity:1}70%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
+.intro-word.locked{color:#fff}
+.intro-flash{position:fixed;inset:0;background:#f2cc30;opacity:0;z-index:2001;pointer-events:none}
+.intro-flash.go{animation:iflash .5s ease-out forwards}
+@keyframes iflash{0%{opacity:0}14%{opacity:1}100%{opacity:0}}
+
+/* ============ NAV ============ */
+.hd{position:fixed;top:0;left:0;width:100%;z-index:400;padding:26px 0;transition:padding .4s var(--ease),background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.hd.solid{padding:14px 0;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.hd-in{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:30px;height:30px;flex:none;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);transition:transform .5s var(--bounce)}
+.brand:hover .brand-mark{transform:rotate(6deg) scale(1.08)}
+.brand-mark svg{width:58%;height:58%}
+.brand span{font-family:var(--f-display);font-weight:700;font-size:1.1rem}
+.brand small{display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;color:var(--text-mute);font-weight:500;text-transform:uppercase}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);position:relative;padding:4px 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .35s var(--bounce)}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:16px}
+.nav-cta .btn{padding:12px 22px;font-size:11px}
+.menu-toggle{display:none;flex-direction:column;gap:5px;width:42px;height:42px;border:1.5px solid var(--line-strong);border-radius:50%;align-items:center;justify-content:center}
+.menu-toggle span{width:15px;height:1.5px;background:var(--text);transition:transform .3s var(--bounce),opacity .3s}
+.menu-toggle.open span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-4.5px) rotate(-45deg)}
+.mmenu{position:fixed;inset:0;z-index:399;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:24px;opacity:0;visibility:hidden;transform:scale(.98);transition:opacity .4s var(--ease),transform .4s var(--ease),visibility 0s linear .4s}
+.mmenu.open{opacity:1;visibility:visible;transform:scale(1);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.mmenu a{font-family:var(--f-display);font-size:clamp(1.9rem,9vw,2.8rem);font-weight:700;padding:12px 0;color:var(--text-dim);opacity:0;transform:translateX(-14px) rotate(-2deg);transition:opacity .5s var(--bounce),transform .5s var(--bounce),color .3s;text-transform:uppercase}
+.mmenu.open a{opacity:1;transform:translateX(0) rotate(0)}
+.mmenu a:hover{color:var(--accent)}
+.mmenu-foot{margin-top:32px;display:flex;flex-direction:column;gap:8px;font-family:var(--f-mono);font-size:13px;color:var(--text-dim)}
+
+/* ============ HERO ============ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:150px 0 80px;overflow:hidden}
+.hero-visual{position:absolute;inset:0;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,#000 30%,transparent 80%);opacity:.5}
+.hero-ring{position:absolute;border-radius:50%;border:1px solid var(--line-strong)}
+.hero-ring.r1{width:min(52vw,560px);height:min(52vw,560px);animation:spin 50s linear infinite}
+.hero-ring.r2{width:min(34vw,380px);height:min(34vw,380px);border-color:rgba(242,204,48,.3);animation:spin 34s linear infinite reverse}
+.hero-ring.r3{width:min(16vw,180px);height:min(16vw,180px);border-color:var(--accent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-sparkle{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-weight:600;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2);margin-bottom:26px;
+  background:rgba(0,0,0,.5);border:1px solid rgba(242,204,48,.25);padding:9px 18px;border-radius:100px;backdrop-filter:blur(6px);
+}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-title{font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;line-height:.93;font-size:clamp(3.1rem,10.5vw,7.4rem)}
+.hero-title .word{display:inline-block;transform:translateY(115%) rotate(3deg);opacity:0;transition:transform .95s var(--bounce),opacity .8s}
+.hero-title.in .word{transform:translateY(0) rotate(0);opacity:1}
+.hero-title .word:nth-child(2){transition-delay:.1s}
+.hero-title .accent-word{color:var(--accent)}
+.hero-sub{margin-top:30px;max-width:600px;font-family:var(--f-ar);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--text-dim);line-height:2}
+.hero-actions{display:flex;flex-wrap:wrap;gap:18px;margin-top:44px}
+.hero-stamps{margin-top:70px;display:flex;flex-wrap:wrap;gap:16px}
+.hstamp{
+  background:var(--bg-panel);border:1.5px dashed var(--line-strong);border-radius:14px;padding:16px 22px;
+  transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce),border-color .3s;
+}
+.hstamp:hover{transform:rotate(0deg) translateY(-4px);border-color:var(--accent)}
+.hstamp b{font-family:var(--f-display);font-weight:800;color:var(--accent);font-size:1.4rem;display:block}
+.hstamp span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mute)}
+.scroll-cue{position:absolute;bottom:30px;left:24px;z-index:2;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--text-mute);text-transform:uppercase}
+.scroll-cue .ring{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--accent);position:relative}
+.scroll-cue .ring::after{content:"↓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:12px;animation:cuebob 1.6s ease-in-out infinite}
+@keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ============ PROBLEM CHAIN — pinned tickets ============ */
+.chain{display:flex;flex-wrap:wrap;gap:14px;margin-top:52px}
+.chip{
+  display:inline-flex;align-items:center;gap:10px;background:var(--bg-panel);border:1.5px solid var(--line);
+  border-radius:100px;padding:12px 20px 12px 16px;font-family:var(--f-mono);font-size:12.5px;font-weight:600;
+  letter-spacing:.04em;color:var(--text-dim);transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce),border-color .3s,color .3s;
+}
+.chip:hover{transform:rotate(0deg) translateY(-3px);border-color:var(--accent);color:var(--text)}
+.chip .n{width:20px;height:20px;border-radius:50%;background:var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text)}
+.chip.final{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.chip.final .n{background:#000;color:var(--accent)}
+.chain-arrow{align-self:center;color:var(--text-mute);font-family:var(--f-mono)}
+
+/* ============ SYSTEM — pinned target cards ============ */
+.stages{display:flex;flex-wrap:wrap;gap:38px 30px;margin-top:60px;justify-content:flex-start}
+.stage{
+  flex:1 1 280px;max-width:360px;background:var(--bg-panel);border-radius:18px;padding:34px 28px 30px;
+  position:relative;transform:rotate(var(--r,0deg));transition:transform .55s var(--bounce),box-shadow .4s;
+  border:1.5px solid var(--line);
+}
+.stage:hover{transform:rotate(0deg) translateY(-8px) scale(1.02);box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.stage-pin{
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--accent-2),var(--accent));box-shadow:0 6px 16px rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-weight:700;font-size:12px;color:#000;
+}
+.stage-en{font-family:var(--f-display);font-weight:800;font-size:1.5rem;letter-spacing:-.01em;color:var(--text);margin-bottom:6px}
+.stage-ar-tag{font-family:var(--f-ar);font-size:.95rem;color:var(--accent);font-weight:500;margin-bottom:16px;display:block}
+.stage-desc{font-family:var(--f-ar);color:var(--text-dim);font-size:1rem;line-height:1.95}
+.stage-trail{width:100%;text-align:center;margin:8px 0 -10px;color:var(--text-mute);font-family:var(--f-mono);font-size:13px}
+
+/* ============ TARGET ============ */
+.target-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:56px;align-items:start}
+.factor-list{display:flex;flex-direction:column;gap:0}
+.factor{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.factor-index{width:26px;height:26px;border-radius:50%;background:var(--bg-panel);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:11px;color:var(--accent);flex:none}
+.factor-en{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mute);flex:none;width:170px}
+.factor-ar{font-family:var(--f-ar);color:var(--text-dim);font-size:1rem}
+.qualities{display:flex;flex-direction:column;gap:16px}
+.quality{
+  display:inline-flex;align-items:center;gap:12px;font-family:var(--f-display);font-weight:800;
+  font-size:clamp(1.7rem,3.4vw,2.6rem);color:var(--text-mute);transform:scale(.85);opacity:.4;
+  transition:transform .6s var(--bounce),opacity .5s,color .4s;align-self:flex-start;
+}
+.quality.on{color:var(--text);transform:scale(1);opacity:1}
+.quality .badge{width:38px;height:38px;border-radius:50%;background:var(--bg-panel);border:1.5px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:12px;color:var(--accent);flex:none}
+.quality.on .badge{background:var(--accent);color:#000;border-color:var(--accent)}
+.target-flow{margin-top:52px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding-top:32px;border-top:1px solid var(--line)}
+.tf-node{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;background:var(--bg-panel);color:var(--text-dim);border:1px solid var(--line)}
+.tf-node.hi{background:var(--accent);color:#000;font-weight:700;border-color:var(--accent)}
+.tf-sep{color:var(--text-mute);font-family:var(--f-mono)}
+
+/* ============ MEASURE — stamp sheet ============ */
+.kpi-sheet{display:flex;flex-wrap:wrap;gap:22px;margin-top:56px}
+.kpi{
+  flex:1 1 240px;max-width:300px;background:var(--bg-panel);border:1.5px dashed var(--line-strong);border-radius:16px;
+  padding:26px 24px;position:relative;transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce),border-color .3s;
+}
+.kpi:hover{transform:rotate(0deg) translateY(-5px);border-color:var(--accent)}
+.kpi-pin{position:absolute;top:-9px;left:20px;width:15px;height:15px;border-radius:50%;background:var(--accent);box-shadow:0 3px 8px rgba(0,0,0,.5)}
+.kpi-en{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.kpi-ar{font-family:var(--f-ar);color:var(--text);font-size:1.05rem;font-weight:500}
+.measure-note{margin-top:26px;font-family:var(--f-mono);font-size:11px;color:var(--text-mute);letter-spacing:.04em}
+
+/* ============ RECEIVE — ticket stubs ============ */
+.timeline{margin-top:56px;display:flex;flex-direction:column;gap:2px}
+.tl-item{display:flex;align-items:center;gap:20px;padding:20px 22px;background:var(--bg-panel);border-radius:12px;transition:transform .4s var(--bounce),background .3s}
+.tl-item:hover{transform:translateX(6px);background:var(--bg-panel-2)}
+[dir="rtl"] .tl-item:hover{transform:translateX(-6px)}
+.tl-num{width:34px;height:34px;border-radius:50%;background:var(--bg-raised);border:1.5px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:12px;color:var(--accent);flex:none}
+.tl-text{font-family:var(--f-ar);font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text);font-weight:500}
+
+/* ============ WHO / CONTRAST ============ */
+.contrast{display:flex;flex-wrap:wrap;gap:26px;margin-top:56px}
+.ccard{flex:1 1 280px;background:var(--bg-panel);border-radius:20px;padding:36px 32px;position:relative;transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce)}
+.ccard:hover{transform:rotate(0deg) translateY(-6px)}
+.ccard.off{opacity:.55}
+.ccard.on{border:2px solid var(--accent);box-shadow:0 20px 50px var(--accent-glow)}
+.ccard.on::after{content:"THE SYSTEM";position:absolute;top:-13px;right:24px;background:var(--accent);color:#000;font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;padding:6px 14px;border-radius:100px}
+.ctitle{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);margin-bottom:22px}
+.ccard.on .ctitle{color:var(--accent)}
+.clist{display:flex;flex-direction:column;gap:13px}
+.clist li{font-family:var(--f-display);font-size:1.1rem;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+.ccard.on .clist li{color:var(--text);font-weight:700}
+.clist li::before{content:"—";color:var(--text-mute)}
+.ccard.on .clist li::before{content:"✓";color:var(--accent)}
+
+/* ============ SOLVE — sticky notes ============ */
+.notes{display:flex;flex-wrap:wrap;gap:20px;margin-top:56px}
+.note{
+  flex:1 1 220px;max-width:270px;background:var(--bg-panel);border-radius:4px;padding:22px 20px;
+  font-family:var(--f-ar);font-size:1rem;color:var(--text-dim);font-weight:500;
+  transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce),background .3s;
+  border-top:3px solid var(--accent);
+}
+.note:hover{transform:rotate(0deg) translateY(-6px);background:var(--bg-panel-2)}
+.note b{color:var(--accent);font-family:var(--f-mono);display:block;margin-bottom:8px;font-size:12px}
+
+/* ============ PROJECTS — sticker sheet ============ */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:46px 0 6px}
+.fbtn{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px 20px;border:1.5px solid var(--line-strong);border-radius:100px;color:var(--text-dim);transition:all .35s var(--bounce)}
+.fbtn:hover{border-color:var(--accent);color:var(--text)}
+.fbtn.on{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+.stickers{display:flex;flex-wrap:wrap;gap:20px;margin-top:30px}
+.sticker{
+  flex:1 1 220px;max-width:280px;background:var(--bg-panel);border-radius:16px;padding:24px 24px 22px;
+  transform:rotate(var(--r,0deg));transition:transform .5s var(--bounce),background .3s,border-color .3s;
+  border:1.5px solid var(--line);position:relative;
+}
+.sticker:hover{transform:rotate(0deg) translateY(-6px) scale(1.03);border-color:var(--accent);background:var(--bg-panel-2)}
+.sticker.hide{display:none}
+.s-sector{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.s-name{display:block;font-family:var(--f-display);font-weight:700;font-size:1.15rem;margin-top:14px}
+.s-foot{display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+.s-label{font-family:var(--f-mono);font-size:10px;color:var(--text-mute);letter-spacing:.04em;text-transform:uppercase}
+.s-arrow{font-family:var(--f-mono);color:var(--text-mute);transition:transform .35s var(--bounce),color .35s}
+.sticker:hover .s-arrow{transform:translate(3px,-3px) rotate(8deg);color:var(--accent)}
+.s-nolink{color:var(--text-mute)}
+.projects-note{margin-top:24px;font-family:var(--f-mono);font-size:11px;color:var(--text-mute)}
+
+/* ============ OFFER ============ */
+.offer-panel{margin-top:56px;border:1.5px solid var(--line-strong);border-radius:24px;padding:clamp(30px,5vw,54px);background:var(--bg-panel);position:relative}
+.offer-list{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.offer-item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg-raised);border-radius:12px;transition:transform .4s var(--bounce)}
+.offer-item:hover{transform:translateX(6px)}
+[dir="rtl"] .offer-item:hover{transform:translateX(-6px)}
+.offer-check{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none;margin-top:2px}
+.offer-item span:last-child{font-family:var(--f-ar);color:var(--text);font-size:1.05rem}
+.offer-cta{margin-top:34px}
+
+/* ============ GUARANTEE — bullseye hit ============ */
+.guarantee{text-align:center;padding:min(15vw,140px) 0;position:relative}
+.g-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(90vw,620px);height:min(90vw,620px);pointer-events:none}
+.g-rings span{position:absolute;inset:0;margin:auto;border-radius:50%;border:1px solid rgba(242,204,48,.16)}
+.g-rings span:nth-child(1){width:100%;height:100%}
+.g-rings span:nth-child(2){width:70%;height:70%}
+.g-rings span:nth-child(3){width:40%;height:40%}
+.guarantee-cash{
+  font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;font-size:clamp(3.2rem,12vw,9rem);line-height:.9;color:var(--accent);
+  transform:scale(.6) rotate(-6deg);opacity:0;transition:transform .9s var(--bounce),opacity .7s;
+}
+.guarantee-cash.on{transform:scale(1) rotate(0);opacity:1}
+.guarantee-caption{margin-top:28px;font-family:var(--f-ar);color:var(--text-dim);max-width:560px;margin-left:auto;margin-right:auto;font-size:1.1rem;line-height:2}
+
+/* ============ CONTACT ============ */
+.contact-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:60px;align-items:start}
+.contact-body{font-family:var(--f-ar);color:var(--text-dim);font-size:clamp(1.05rem,1.8vw,1.3rem);line-height:2;margin-top:22px;max-width:560px}
+.contact-actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:16px}
+.contact-list{margin-top:0;display:flex;flex-direction:column;gap:0}
+.crow{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;background:var(--bg-panel);border-radius:12px;margin-bottom:10px;transition:transform .4s var(--bounce),background .3s}
+.crow:hover{transform:translateX(6px);background:var(--bg-panel-2)}
+[dir="rtl"] .crow:hover{transform:translateX(-6px)}
+.crow .l{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute)}
+.crow .v{font-family:var(--f-display);font-weight:700;font-size:1.05rem;color:var(--text);transition:color .3s}
+.crow:hover .v{color:var(--accent)}
+
+/* ============ FOOTER ============ */
+.site-footer{border-top:1px solid var(--line);padding:60px 0 32px}
+.footer-top{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:46px}
+.footer-brand{display:flex;flex-direction:column;gap:16px}
+.footer-brand-mark{display:flex;align-items:center;gap:10px}
+.footer-tagline{font-family:var(--f-mono);font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.footer-desc{color:var(--text-mute);font-size:14px;max-width:320px;line-height:1.8}
+.footer-col h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);margin-bottom:18px}
+.footer-col a{display:block;color:var(--text-dim);font-size:14px;padding:6px 0;transition:color .3s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{margin-top:52px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--f-mono);font-size:11px;color:var(--text-mute)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:980px){
+  .nav-links{display:none}
+  .menu-toggle{display:flex}
+  .target-grid{grid-template-columns:1fr;gap:40px}
+  .contact-wrap{grid-template-columns:1fr;gap:40px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .sec{padding:74px 0}
+  .stage{flex:1 1 100%}
+  .kpi{flex:1 1 100%;max-width:none}
+  .sticker{flex:1 1 100%;max-width:none}
+  .note{flex:1 1 100%;max-width:none}
+  .ccard{flex:1 1 100%}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{justify-content:center}
+  .footer-top{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.2s !important}
+}
+</style>
+</head>
+<body>
+
+<svg class="grain" width="100%" height="100%"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div class="cur" id="cur"></div>
+<canvas id="confetti"></canvas>
+
+<!-- ================= INTRO ================= -->
+<div class="intro" id="intro">
+  <div class="intro-ring"></div>
+  <div class="intro-ring2"></div>
+  <div class="intro-word" id="introWord">SCAN</div>
+</div>
+<div class="intro-flash" id="introFlash"></div>
+
+<!-- ================= NAV ================= -->
+<header class="hd" id="hd">
+  <div class="wrap hd-in">
+    <a href="#hero" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <polygon points="12,16 19,16 11,34 4,34" fill="#000000"/>
+          <polygon points="23,5 30,5 22,34 15,34" fill="#000000"/>
+        </svg>
+      </span>
+      <span>SLASH<small>TARGET SYSTEM</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#problem" data-nav>System</a>
+      <a href="#system" data-nav>How it works</a>
+      <a href="#target" data-nav>Target</a>
+      <a href="#measure" data-nav>Measure</a>
+      <a href="#projects" data-nav>Projects</a>
+      <a href="#offer" data-nav>Offer</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-gold"><span dir="rtl" lang="ar">احجز جلستك الآن</span><span class="btn-arrow">→</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mmenu" id="mmenu">
+  <nav aria-label="Mobile">
+    <a href="#problem" data-mnav>System</a>
+    <a href="#system" data-mnav>How it works</a>
+    <a href="#target" data-mnav>Target</a>
+    <a href="#measure" data-mnav>Measure</a>
+    <a href="#projects" data-mnav>Projects</a>
+    <a href="#offer" data-mnav>Offer</a>
+    <a href="#contact" data-mnav>Contact</a>
+  </nav>
+  <div class="mmenu-foot">
+    <a href="tel:+9647770148868">+964 770 148 868</a>
+    <a href="mailto:Slashviral@gmail.com">Slashviral@gmail.com</a>
+    <a href="https://www.instagram.com/slash.viral?igsh=YW1vMzBzcnBoOGN3&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-ring r1"></div>
+      <div class="hero-ring r2"></div>
+      <div class="hero-ring r3"></div>
+    </div>
+    <svg class="hero-sparkle" id="heroSparkle"></svg>
+    <div class="wrap hero-content">
+      <p class="hero-eyebrow"><span class="dot"></span> SLASH VIRAL — MARKETING SYSTEM · 2025</p>
+      <h1 class="hero-title" id="heroTitle">
+        <span class="word">SLASH</span> <span class="word accent-word">TARGET SYSTEM</span>
+      </h1>
+      <p class="hero-sub" dir="rtl" lang="ar">نظام تسويقي متكامل يبدأ بتحديد هدف واضح وينتهي بنتائج قابلة للقياس.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-gold"><span dir="rtl" lang="ar">احجز جلستك الآن</span><span class="btn-arrow">→</span></a>
+        <a href="#system" class="btn btn-line"><span dir="rtl" lang="ar">اكتشف النظام</span><span class="btn-arrow">→</span></a>
+      </div>
+      <div class="hero-stamps">
+        <div class="hstamp" style="--r:-3deg"><b>05</b><span>Stages</span></div>
+        <div class="hstamp" style="--r:2deg"><b>12</b><span>Client Projects</span></div>
+        <div class="hstamp" style="--r:-2deg"><b>05</b><span>Sectors Served</span></div>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>Scroll</span><span class="ring"></span></div>
+  </section>
+
+  <!-- ================= PROBLEM ================= -->
+  <section class="sec" id="problem">
+    <div class="wrap">
+      <p class="eyebrow rv">The problem</p>
+      <p class="lede rv" dir="rtl" lang="ar" style="max-width:820px">
+        بداية معظم المشاريع ما تفشل بسبب ضعف الإعلانات، وإنما لأنها تبدأ التسويق بدون هدف واضح أو خطة أو طريقة لقياس النتائج.
+      </p>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+        لهذا السبب بالذات طوّرنا <span class="ltr mono">Slash Target System</span> — نظام تسويقي متكامل يساعد الشركات على تحقيق أهداف واضحة وقابلة للقياس من خلال مراحل عمل تبدأ بتشخيص المشروع، وتحديد الهدف، وبناء الاستراتيجية وتنفيذها، وأخيرًا قياس النتائج وتحسينها باستمرار.
+      </p>
+
+      <div class="chain rv" id="chain"></div>
+    </div>
+  </section>
+
+  <!-- ================= SYSTEM ================= -->
+  <section class="sec" id="system">
+    <div class="wrap">
+      <p class="eyebrow rv">How the system works</p>
+      <h2 class="h-l rv">Five stages, pinned<br>to one board.</h2>
+      <div class="stages" id="stages"></div>
+    </div>
+  </section>
+
+  <!-- ================= TARGET ================= -->
+  <section class="sec" id="target">
+    <div class="wrap">
+      <p class="eyebrow rv">Target definition</p>
+      <h2 class="h-l rv">How do we define<br>the target?</h2>
+      <div class="target-grid">
+        <div class="factor-list rv" id="factorList"></div>
+        <div class="qualities" id="qualities"></div>
+      </div>
+      <div class="target-flow rv">
+        <span class="tf-node">CURRENT STATE</span><span class="tf-sep">→</span>
+        <span class="tf-node hi">TARGET</span><span class="tf-sep">→</span>
+        <span class="tf-node">MEASUREMENT</span><span class="tf-sep">→</span>
+        <span class="tf-node">RESULT</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEASURE ================= -->
+  <section class="sec" id="measure">
+    <div class="wrap">
+      <p class="eyebrow rv">Performance measurement</p>
+      <h2 class="h-l rv">How do we measure<br>success?</h2>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+        نقيس النجاح من خلال مؤشرات أداء واضحة نتفق عليها منذ البداية، مثل عدد العملاء المحتملين وعدد الحجوزات ومعدل التحويل وتكلفة الحصول على العميل ونمو المبيعات والعائد على الإنفاق الإعلاني.
+      </p>
+      <div class="kpi-sheet" id="kpiSheet"></div>
+      <p class="measure-note rv">// CONCEPTUAL REPRESENTATION — NOT LIVE ACCOUNT DATA</p>
+    </div>
+  </section>
+
+  <!-- ================= RECEIVE ================= -->
+  <section class="sec" id="receive">
+    <div class="wrap">
+      <p class="eyebrow rv">Deliverables</p>
+      <h2 class="h-l rv" dir="rtl" lang="ar">ماذا يستلم العميل؟</h2>
+      <div class="timeline rv" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHO ================= -->
+  <section class="sec" id="who">
+    <div class="wrap">
+      <p class="eyebrow rv">Who is this for</p>
+      <h2 class="h-l rv" dir="rtl" lang="ar">لمن صُمم هذا النظام؟</h2>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+        صُمم للشركات التي تبحث عن نمو حقيقي، لا مجرد إدارة حسابات أو إنتاج محتوى — كل المشاريع التي تعتمد على جذب العملاء وتحقيق المبيعات بشكل مستمر.
+      </p>
+      <div class="contrast rv" id="contrast"></div>
+    </div>
+  </section>
+
+  <!-- ================= SOLVE ================= -->
+  <section class="sec" id="solve">
+    <div class="wrap">
+      <p class="eyebrow rv">Problems we solve</p>
+      <h2 class="h-l rv" dir="rtl" lang="ar">أبرز المشاكل التي يحلّها النظام</h2>
+      <div class="notes" id="notes"></div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section class="sec" id="projects">
+    <div class="wrap">
+      <p class="eyebrow rv">Selected work</p>
+      <h2 class="h-l rv">Projects that trusted<br>the system.</h2>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+        خلال الفترة الماضية، تم تطبيق <span class="ltr mono">Slash Target System</span> على مشاريع من قطاعات مختلفة، مما أثبت مرونة النظام وقدرته على التكيف مع طبيعة كل سوق، سواء كان عقاريًا، طبيًا، تقنيًا، تعليميًا أو تجاريًا.
+      </p>
+      <div class="filters rv" id="filters"></div>
+      <div class="stickers" id="stickers"></div>
+      <p class="projects-note">ALL EXTERNAL LINKS OPEN IN A NEW TAB · TARGET="_BLANK" REL="NOOPENER NOREFERRER"</p>
+    </div>
+  </section>
+
+  <!-- ================= OFFER ================= -->
+  <section class="sec" id="offer">
+    <div class="wrap">
+      <p class="eyebrow rv">Special offer</p>
+      <h2 class="h-l rv" dir="rtl" lang="ar">العرض الخاص للبدء</h2>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+        نقدّم هذا العرض للمشاريع الراغبة في تطبيق <span class="ltr mono">Slash Target System</span> والاستفادة من منهجية عمل مبنية على التخطيط، والتنفيذ، والقياس المستمر، بما يضمن بناء عملية تسويقية أكثر وضوحًا وتنظيمًا.
+      </p>
+      <div class="offer-panel rv">
+        <p class="eyebrow" style="margin-bottom:0">What's included</p>
+        <div class="offer-list" id="offerList"></div>
+        <div class="offer-cta">
+          <a href="#contact" class="btn btn-gold"><span dir="rtl" lang="ar">احجز جلستك الآن</span><span class="btn-arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GUARANTEE ================= -->
+  <section class="sec guarantee" id="guarantee">
+    <div class="g-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="wrap">
+      <p class="eyebrow rv" style="justify-content:center">Performance guarantee</p>
+      <div class="guarantee-cash" id="guaranteeCash">20% CASHBACK</div>
+      <p class="guarantee-caption rv" dir="rtl" lang="ar">
+        أموال مستردة من قيمة العقد الموقّع، وفق الشروط المتفق عليها قبل بدء التنفيذ — إذا لم يتحقق الـ<span class="ltr mono">Target</span> المحدد وفق الخطط.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="sec" id="contact">
+    <div class="wrap">
+      <div class="contact-wrap">
+        <div>
+          <p class="eyebrow rv">Let's start</p>
+          <h2 class="h-xl rv" dir="rtl" lang="ar">جاهز نبدأ؟</h2>
+          <p class="contact-body rv" dir="rtl" lang="ar">
+            تواصل ويانا نرتب جلسة تشخيص، لنتعرف على مشروعك، ونحدد أهدافه، ونوضح كيف يمكن لـ <span class="ltr mono">Slash Target System</span> أن يساعدك بالوصول إلى نتائج قابلة للقياس.
+          </p>
+          <div class="contact-actions rv">
+            <a href="#contactList" class="btn btn-gold" id="ctaSend"><span dir="rtl" lang="ar">احجز جلستك الآن</span><span class="btn-arrow">→</span></a>
+          </div>
+        </div>
+        <div class="contact-list rv" id="contactList"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <polygon points="12,16 19,16 11,34 4,34" fill="#000000"/>
+              <polygon points="23,5 30,5 22,34 15,34" fill="#000000"/>
+            </svg>
+          </span>
+          <span style="font-family:var(--f-display);font-weight:700;font-size:1.1rem">SLASH TARGET SYSTEM</span>
+        </div>
+        <p class="footer-tagline">Slash Viral — The Way To Another World</p>
+        <p class="footer-desc">نظام تسويقي متكامل يبدأ بتحديد هدف واضح وينتهي بنتائج قابلة للقياس.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#problem">System</a>
+        <a href="#system">How it works</a>
+        <a href="#target">Target</a>
+        <a href="#measure">Measure</a>
+        <a href="#projects">Projects</a>
+        <a href="#offer">Offer</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+9647770148868">+964 770 148 868</a>
+        <a href="mailto:Slashviral@gmail.com">Slashviral@gmail.com</a>
+        <a href="https://www.instagram.com/slash.viral?igsh=YW1vMzBzcnBoOGN3&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.linkedin.com/company/seen-idara/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 SLASH VIRAL. ALL RIGHTS RESERVED.</span>
+      <span>SCAN · TARGET · STRATEGY · EXECUTE · MEASURE</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FINE=matchMedia("(hover:hover) and (pointer:fine)").matches;
+if(RM) document.documentElement.classList.add("rmo");
+if(FINE && !RM) document.documentElement.classList.add("has-fine");
+
+/* ══════════════════════════════════════════════════════════════
+   REAL CONTENT
+   ══════════════════════════════════════════════════════════════ */
+const STAGES=[
+  {n:"01",en:"SCAN",ar:"التشخيص",r:-3,desc:"قبل أي تعاون، نحلل مشروعك لمعرفة وضعه الحالي، وتحديد نقاط القوة والضعف، واكتشاف الأسباب الحقيقية التي تؤثر على النمو."},
+  {n:"02",en:"TARGET",ar:"تحديد الهدف",r:2,desc:"نحدد سويًا هدفًا واضحًا وقابلًا للقياس، مثل زيادة عدد العملاء أو الحجوزات أو المبيعات أو الطلبات، وتحسين العائد من الإعلانات."},
+  {n:"03",en:"STRATEGY",ar:"الاستراتيجية",r:-2,desc:"نبني خطة تسويقية تناسب مشروعك ووضعه الحالي، تشمل المحتوى والإعلانات ورسائل التسويق وخطة تنفيذ واضحة تحدد ما سنعمل عليه وكيف سنصل إليه."},
+  {n:"04",en:"EXECUTE",ar:"التنفيذ",r:3,desc:"ننفذ الاستراتيجية من خلال إنتاج المحتوى، وإدارة الحملات الإعلانية، وتطبيق الخطة بجدول زمني واضح، ومتابعة التنفيذ."},
+  {n:"05",en:"MEASURE",ar:"القياس",r:-3,desc:"نقيس النتائج بشكل مستمر، ونراجع الأداء لمعرفة ما الذي يحقق أفضل النتائج وما الذي يحتاج إلى تطوير، للوصول إلى أفضل النتائج الممكنة."},
+];
+const CHAIN=["PROBLEM","NO CLEAR TARGET","WASTED TIME","WASTED BUDGET","NO MEASURABLE RESULTS","SLASH TARGET SYSTEM"];
+const FACTORS=[
+  {en:"Current situation",ar:"وضع المشروع الحالي"},{en:"Market size",ar:"حجم السوق"},
+  {en:"Available budget",ar:"الميزانية المتاحة"},{en:"Operational capacity",ar:"القدرة التشغيلية"},
+  {en:"Cooperation duration",ar:"مدة التعاون"},
+];
+const QUALITIES=["REALISTIC","CLEAR","MEASURABLE"];
+const KPIS=[
+  {en:"Leads",ar:"عدد العملاء المحتملين"},{en:"Bookings",ar:"عدد الحجوزات"},
+  {en:"Conversion",ar:"معدل التحويل"},{en:"CAC",ar:"تكلفة الحصول على العميل"},
+  {en:"Sales Growth",ar:"نمو المبيعات"},{en:"ROAS",ar:"العائد على الإنفاق الإعلاني"},
+];
+const DELIVER=["تشخيص المشروع","تحديد Target واضح ومتفق عليه","بناء استراتيجية تسويقية","خطة محتوى","تنفيذ المحتوى","الحملات الإعلانية","التقارير الدورية","اجتماعات المراجعة والتحسين"];
+const NOTES=["ضعف المبيعات","انخفاض عدد العملاء","ضعف نتائج الحملات الإعلانية","غياب الخطة التسويقية","غياب الأهداف الواضحة","صعوبة قياس نتائج التسويق","هدر الميزانية"];
+const OFFER=["جلسة تشخيص أولية للمشروع","بناء Target واضح وقابل للقياس","تنفيذ كامل وفق الخطط المحددة","متابعة مستمرة طوال فترة التنفيذ","ضمان الأداء"];
+const PROJECTS=[
+  {name:"Shareek 360",sector:"Real Estate",filter:"real-estate",url:"https://www.instagram.com/shareek360?igsh=dmN5OGs4YW91OHNy",r:-3},
+  {name:"Lip Lab",sector:"Medical",filter:"medical",url:"https://www.instagram.com/lip.lab.ll?igsh=dnJrbXNzNXEzMGZ5",r:2},
+  {name:"Dr. Doha Al-Naei",sector:"Medical",filter:"medical",url:"https://www.instagram.com/dralaqghazi?igsh=MTd3dmo0dm9sd29tZQ==",r:-2},
+  {name:"Dr. Ghayath Mahdi Clinic",sector:"Medical",filter:"medical",url:"https://www.instagram.com/dr.gheyath_mahdi_clinic?igsh=ZWJiMWZyZ2thMWU=",r:3},
+  {name:"Dr. Hawraa Kareem",sector:"Medical",filter:"medical",url:"https://www.instagram.com/dr.hawraa_kareem?igsh=MWlld20yZzIxZGtzMg==",r:-3},
+  {name:"Next Flow",sector:"Technology",filter:"technology",url:"https://www.instagram.com/nextflow.iq?igsh=MWxwMWh2ZTFhdmZpMA==",r:2},
+  {name:"Miswag",sector:"Technology",filter:"technology",url:"https://www.instagram.com/miswagi_?igsh=MXZnYXU2MzJrcHh1cQ==",r:-2},
+  {name:"Zadcell",sector:"Technology",filter:"technology",url:"https://www.instagram.com/zadcell?igsh=aHpmeXh0M2ZveGg1cQ==",r:3},
+  {name:"Grafi Iraq",sector:"Technology",filter:"technology",url:"https://www.instagram.com/grafi.iraq?igsh=MWtqN3o3aTZvZXJyNw==",r:-3},
+  {name:"Spark Studio",sector:"Technology",filter:"technology",url:"https://www.instagram.com/spark.studi.iq?igsh=MWVvMjUyemI0d2g4NQ==",r:2},
+  {name:"Nukhba Academy",sector:"Education",filter:"education",url:"https://www.instagram.com/nukhba_academy?igsh=cGsza2Z3MHNqc28x",r:-2},
+  {name:"الأستاذ ذو الفقار",sector:"Education",filter:"education",url:null,r:3},
+  {name:"Dexa",sector:"Commercial",filter:"commercial",url:"https://www.instagram.com/dexa.iq?igsh=MTNjNmI4aXJvZXhjMw==",r:-3},
+];
+const FILTERS=["All","Real Estate","Medical","Technology","Education","Commercial"];
+const FILTER_MAP={"All":"all","Real Estate":"real-estate","Medical":"medical","Technology":"technology","Education":"education","Commercial":"commercial"};
+
+/* ---------- render: problem chain ---------- */
+(function(){
+  const rots=[-3,2,-2,3,-3,0];
+  $("#chain").innerHTML = CHAIN.map((c,i)=>{
+    const final = i===CHAIN.length-1;
+    return `<span class="chip ${final?'final':''}" style="--r:${rots[i]}deg"><span class="n">${i+1}</span>${c}</span>${!final?'<span class="chain-arrow">→</span>':''}`;
+  }).join("");
+})();
+
+/* ---------- render: stages ---------- */
+(function(){
+  $("#stages").innerHTML = STAGES.map(s=>`
+    <article class="stage rv" style="--r:${s.r}deg">
+      <span class="stage-pin">${s.n}</span>
+      <div class="stage-en">${s.en}</div>
+      <span class="stage-ar-tag">${s.ar}</span>
+      <p class="stage-desc" dir="rtl" lang="ar">${s.desc}</p>
+    </article>`).join("");
+})();
+
+/* ---------- render: target factors + qualities ---------- */
+(function(){
+  $("#factorList").innerHTML = FACTORS.map((f,i)=>`
+    <div class="factor"><span class="factor-index">${String(i+1).padStart(2,'0')}</span><span class="factor-en">${f.en}</span><span class="factor-ar" dir="rtl" lang="ar">${f.ar}</span></div>`).join("");
+  $("#qualities").innerHTML = QUALITIES.map((q,i)=>`
+    <div class="quality" data-q><span class="badge">${String(i+1).padStart(2,'0')}</span>${q}</div>`).join("");
+})();
+
+/* ---------- render: KPI sheet ---------- */
+(function(){
+  const rots=[-3,2,-2,3,-2,2];
+  $("#kpiSheet").innerHTML = KPIS.map((k,i)=>`
+    <div class="kpi rv" style="--r:${rots[i]}deg"><span class="kpi-pin"></span><div class="kpi-en">${k.en}</div><div class="kpi-ar" dir="rtl" lang="ar">${k.ar}</div></div>`).join("");
+})();
+
+/* ---------- render: deliverables timeline ---------- */
+(function(){
+  $("#timeline").innerHTML = DELIVER.map((d,i)=>`
+    <div class="tl-item"><span class="tl-num">${String(i+1).padStart(2,'0')}</span><span class="tl-text" dir="rtl" lang="ar">${d.replace('Target','<span class="ltr mono">Target</span>')}</span></div>`).join("");
+})();
+
+/* ---------- render: contrast ---------- */
+(function(){
+  $("#contrast").innerHTML = `
+    <div class="ccard off" style="--r:-2deg">
+      <div class="ctitle">Content Only</div>
+      <ul class="clist"><li>Account management</li><li>Content production</li><li>No defined target</li><li>No measurement system</li></ul>
+    </div>
+    <div class="ccard on" style="--r:2deg">
+      <div class="ctitle">Slash Target System</div>
+      <ul class="clist"><li>Scan</li><li>Target</li><li>Strategy</li><li>Execute</li><li>Measure</li></ul>
+    </div>`;
+})();
+
+/* ---------- render: solve notes ---------- */
+(function(){
+  const rots=[-3,2,-2,3,-3,2,-2];
+  $("#notes").innerHTML = NOTES.map((n,i)=>`
+    <div class="note rv" style="--r:${rots[i%rots.length]}deg"><b>${String(i+1).padStart(2,'0')}</b><span dir="rtl" lang="ar">${n}</span></div>`).join("");
+})();
+
+/* ---------- render: project stickers + filters ---------- */
+(function(){
+  $("#filters").innerHTML = FILTERS.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" data-filter="${FILTER_MAP[f]}">${f}</button>`).join("");
+  $("#stickers").innerHTML = PROJECTS.map(p=>{
+    const link = p.url
+      ? `<a class="sticker rv" data-sector="${p.filter}" style="--r:${p.r}deg" href="${p.url}" target="_blank" rel="noopener noreferrer">
+          <span class="s-sector">${p.sector}</span><span class="s-name">${p.name}</span>
+          <span class="s-foot"><span class="s-label">View on Instagram</span><span class="s-arrow">↗</span></span>
+        </a>`
+      : `<div class="sticker rv s-nolink" data-sector="${p.filter}" style="--r:${p.r}deg">
+          <span class="s-sector">${p.sector}</span><span class="s-name" dir="rtl" lang="ar">${p.name}</span>
+          <span class="s-foot"><span class="s-label" style="opacity:1">No public link</span></span>
+        </div>`;
+    return link;
+  }).join("");
+})();
+
+/* ---------- render: offer list ---------- */
+(function(){
+  $("#offerList").innerHTML = OFFER.map(o=>`
+    <div class="offer-item"><span class="offer-check">→</span><span dir="rtl" lang="ar">${o.replace('Target','<span class="ltr mono">Target</span>')}</span></div>`).join("");
+})();
+
+/* ---------- render: contact ---------- */
+(function(){
+  $("#contactList").innerHTML = `
+    <a class="crow" href="tel:+9647770148868"><span class="l">Phone</span><span class="v mono">+964 770 148 868</span></a>
+    <a class="crow" href="mailto:Slashviral@gmail.com"><span class="l">Email</span><span class="v mono">Slashviral@gmail.com</span></a>
+    <a class="crow" href="https://www.instagram.com/slash.viral?igsh=YW1vMzBzcnBoOGN3&utm_source=qr" target="_blank" rel="noopener noreferrer"><span class="l">Instagram</span><span class="v">@slash.viral</span></a>
+    <a class="crow" href="https://www.linkedin.com/company/seen-idara/" target="_blank" rel="noopener noreferrer"><span class="l">LinkedIn</span><span class="v">Seen Idara</span></a>`;
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   REVEAL ON SCROLL
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  const els=$$(".rv, .stage, .kpi, .note, .sticker");
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        e.target.style.setProperty("--d",(Math.min(i%6,5)*.06)+"s");
+        e.target.classList.add("on");
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.15, rootMargin:"0px 0px -6% 0px"});
+  els.forEach(el=>io.observe(el));
+
+  /* qualities pop in one at a time */
+  const qIo=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("on"); qIo.unobserve(e.target); } });
+  },{threshold:.4});
+  $$("[data-q]").forEach((q,i)=>{ q.style.transitionDelay=(i*.12)+"s"; qIo.observe(q); });
+
+  /* guarantee cash */
+  const cash=$("#guaranteeCash");
+  const gIo=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("on"); gIo.unobserve(e.target); } });
+  },{threshold:.4});
+  gIo.observe(cash);
+})();
+
+/* hero title reveal */
+requestAnimationFrame(()=>setTimeout(()=>$("#heroTitle").classList.add("in"), 60));
+
+/* ══════════════════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  const hd=$("#hd");
+  addEventListener("scroll", ()=>hd.classList.toggle("solid", scrollY>40), {passive:true});
+  const sections=["problem","system","target","measure","projects","offer","contact"].map(id=>$("#"+id));
+  const navLinks=$$("[data-nav]");
+  function activeNav(){
+    const mid=innerHeight*0.4; let id=null;
+    sections.forEach(s=>{ if(!s) return; const r=s.getBoundingClientRect(); if(r.top<=mid && r.bottom>=mid) id=s.id; });
+    navLinks.forEach(a=>a.classList.toggle("active", a.getAttribute("href")==="#"+id));
+  }
+  addEventListener("scroll", activeNav, {passive:true}); activeNav();
+
+  const menuToggle=$("#menuToggle"), mmenu=$("#mmenu");
+  menuToggle.addEventListener("click", ()=>{
+    const open=mmenu.classList.toggle("open");
+    menuToggle.classList.toggle("open", open);
+    menuToggle.setAttribute("aria-expanded", open?"true":"false");
+    document.body.style.overflow=open?"hidden":"";
+  });
+  $$("[data-mnav]").forEach(a=>a.addEventListener("click", ()=>{
+    mmenu.classList.remove("open"); menuToggle.classList.remove("open"); document.body.style.overflow="";
+  }));
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   PROJECT FILTER
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  const btns=$$(".fbtn"), cards=()=>$$(".sticker");
+  btns.forEach(b=>b.addEventListener("click", ()=>{
+    btns.forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    const f=b.dataset.filter;
+    cards().forEach(c=>c.classList.toggle("hide", !(f==="all"||c.dataset.sector===f)));
+  }));
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   CURSOR + MAGNETIC BUTTONS
+   ══════════════════════════════════════════════════════════════ */
+if(FINE && !RM){
+  const cur=$("#cur");
+  let mx=0,my=0,cx=0,cy=0;
+  addEventListener("mousemove", e=>{ mx=e.clientX; my=e.clientY; });
+  (function raf(){ cx+=(mx-cx)*.22; cy+=(my-cy)*.22; cur.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(raf); })();
+  document.addEventListener("mouseover", e=>{
+    const big=e.target.closest(".stage, .sticker, .kpi, .note, a, button");
+    cur.classList.toggle("big", !!big);
+  });
+  document.addEventListener("mousedown", ()=>cur.classList.add("snap"));
+  document.addEventListener("mouseup", ()=>cur.classList.remove("snap"));
+  $$(".btn, .fbtn").forEach(m=>{
+    m.addEventListener("mousemove", e=>{
+      const r=m.getBoundingClientRect();
+      m.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.22}px,${(e.clientY-r.top-r.height/2)*.32}px)`;
+    });
+    m.addEventListener("mouseleave", ()=>{ m.style.transition="transform .6s var(--bounce)"; m.style.transform=""; setTimeout(()=>m.style.transition="",600); });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO SPARKLE
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  if(RM) return;
+  const svg=$("#heroSparkle"); let html="";
+  for(let i=0;i<14;i++){
+    const x=Math.random()*100, y=15+Math.random()*75, r=Math.random()*1.4+.6, dur=(3+Math.random()*3).toFixed(1), delay=(Math.random()*4).toFixed(1);
+    html += `<circle cx="${x}%" cy="${y}%" r="${r}" fill="#f2cc30" opacity="0"><animate attributeName="opacity" values="0;.9;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/></circle>`;
+  }
+  svg.innerHTML = html;
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   CONFETTI BURST
+   ══════════════════════════════════════════════════════════════ */
+function confettiBurst(x,y){
+  if(RM) return;
+  const c=$("#confetti"), ctx=c.getContext("2d");
+  c.width=innerWidth; c.height=innerHeight;
+  const colors=["#f2cc30","#ffe066","#ffffff","#cccccc"];
+  const N=70, pieces=[];
+  for(let i=0;i<N;i++){
+    pieces.push({ x:x||innerWidth/2, y:y||innerHeight*0.5, vx:(Math.random()-.5)*14, vy:-Math.random()*15-6,
+      size:Math.random()*7+4, color:colors[i%colors.length], rot:Math.random()*Math.PI, vr:(Math.random()-.5)*.3, life:0 });
+  }
+  function tick(){
+    ctx.clearRect(0,0,c.width,c.height);
+    let alive=false;
+    pieces.forEach(p=>{
+      p.vy+=0.35; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life++;
+      if(p.life<140){ alive=true;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle=p.color; ctx.globalAlpha=Math.max(0,1-p.life/140);
+        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*.6);
+        ctx.restore();
+      }
+    });
+    if(alive) requestAnimationFrame(tick); else ctx.clearRect(0,0,c.width,c.height);
+  }
+  tick();
+}
+$$("#ctaSend, .offer-cta .btn, .nav-cta .btn-gold").forEach(b=>{
+  b.addEventListener("click", e=>{ confettiBurst(e.clientX, e.clientY); });
+});
+
+/* ══════════════════════════════════════════════════════════════
+   INTRO — SCAN → TARGET → LOCKED → flash
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  const intro=$("#intro"), word=$("#introWord"), flash=$("#introFlash");
+  if(RM){ intro.classList.add("gone"); setTimeout(()=>intro.remove(),50); return; }
+  const seq=[{t:"SCAN",locked:false},{t:"TARGET",locked:false},{t:"LOCKED ✓",locked:true}];
+  let i=0;
+  document.body.style.overflow="hidden";
+  function step(){
+    word.textContent=seq[i].t;
+    word.classList.toggle("locked", seq[i].locked);
+    word.classList.remove("pop"); void word.offsetWidth; word.classList.add("pop");
+    i++;
+    if(i<seq.length){ setTimeout(step, 600); }
+    else{
+      setTimeout(()=>{
+        flash.classList.add("go");
+        setTimeout(()=>{
+          intro.classList.add("gone");
+          document.body.style.overflow="";
+          setTimeout(()=>intro.remove(), 700);
+        }, 240);
+      }, 520);
+    }
+  }
+  setTimeout(step, 280);
+  setTimeout(()=>{ if(!intro.classList.contains("gone")){ flash.classList.add("go"); intro.classList.add("gone"); document.body.style.overflow=""; setTimeout(()=>intro.remove(),700);} }, 5200);
+})();
+</script>
+</body>
+</html>
