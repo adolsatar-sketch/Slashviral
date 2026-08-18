@@ -196,7 +196,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 .hero-title.in .word{transform:translateY(0) rotate(0);opacity:1}
 .hero-title .word:nth-child(2){transition-delay:.1s}
 .hero-title .accent-word{color:var(--accent)}
-.hero-sub{margin-top:30px;max-width:600px;font-family:var(--f-ar);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--text-dim);line-height:2}
+.hero-sub{margin-top:30px;max-width:600px;font-family:var(--f-ar);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--text);font-weight:500;line-height:2}
 .hero-actions{display:flex;flex-wrap:wrap;gap:18px;margin-top:44px}
 .hero-stamps{margin-top:70px;display:flex;flex-wrap:wrap;gap:16px}
 .hstamp{
@@ -205,7 +205,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 }
 .hstamp:hover{transform:rotate(0deg) translateY(-4px);border-color:var(--accent)}
 .hstamp b{font-family:var(--f-display);font-weight:800;color:var(--accent);font-size:1.4rem;display:block}
-.hstamp span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mute)}
+.hstamp span{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mute)}
 .scroll-cue{position:absolute;bottom:30px;left:24px;z-index:2;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--text-mute);text-transform:uppercase}
 .scroll-cue .ring{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--accent);position:relative}
 .scroll-cue .ring::after{content:"↓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:12px;animation:cuebob 1.6s ease-in-out infinite}
@@ -223,6 +223,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 .chip.final{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
 .chip.final .n{background:#000;color:var(--accent)}
 .chain-arrow{align-self:center;color:var(--text-mute);font-family:var(--f-mono)}
+.problem-points{margin-top:22px;display:flex;flex-direction:column;gap:12px;max-width:760px}
+.problem-points li{font-family:var(--f-ar);color:var(--text-dim);font-size:1.05rem;line-height:1.7;display:flex;align-items:flex-start;gap:10px}
+.problem-points li::before{content:"—";color:var(--accent);flex:none}
 
 /* ============ SYSTEM — pinned target cards ============ */
 .stages{display:flex;flex-wrap:wrap;gap:38px 30px;margin-top:60px;justify-content:flex-start}
@@ -251,7 +254,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
 .factor-ar{font-family:var(--f-ar);color:var(--text-dim);font-size:1rem}
 .qualities{display:flex;flex-direction:column;gap:16px}
 .quality{
-  display:inline-flex;align-items:center;gap:12px;font-family:var(--f-display);font-weight:800;
+  display:inline-flex;align-items:center;gap:12px;font-family:var(--f-ar);font-weight:700;
   font-size:clamp(1.7rem,3.4vw,2.6rem);color:var(--text-mute);transform:scale(.85);opacity:.4;
   transition:transform .6s var(--bounce),opacity .5s,color .4s;align-self:flex-start;
 }
@@ -539,15 +542,15 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
       <h1 class="hero-title" id="heroTitle">
         <span class="word">SLASH</span> <span class="word accent-word">TARGET SYSTEM</span>
       </h1>
-      <p class="hero-sub" dir="rtl" lang="ar">نظام تسويقي متكامل يبدأ بتحديد هدف واضح وينتهي بنتائج قابلة للقياس.</p>
+      <p class="hero-sub" dir="rtl" lang="ar">نظام تسويقي متكامل يحول أهداف مشروعك إلى استراتيجية وتنفيذ ونتائج قابلة للقياس.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-gold"><span dir="rtl" lang="ar">احجز جلستك الآن</span><span class="btn-arrow">→</span></a>
-        <a href="#system" class="btn btn-line"><span dir="rtl" lang="ar">اكتشف النظام</span><span class="btn-arrow">→</span></a>
+        <a href="#contact" class="btn btn-gold"><span dir="rtl" lang="ar">حدد <span class="ltr mono">Target</span> مشروعك</span><span class="btn-arrow">→</span></a>
+        <a href="#system" class="btn btn-line"><span dir="rtl" lang="ar">اكتشف شلون يشتغل النظام</span><span class="btn-arrow">→</span></a>
       </div>
       <div class="hero-stamps">
-        <div class="hstamp" style="--r:-3deg"><b>05</b><span>Stages</span></div>
-        <div class="hstamp" style="--r:2deg"><b>12</b><span>Client Projects</span></div>
-        <div class="hstamp" style="--r:-2deg"><b>05</b><span>Sectors Served</span></div>
+        <div class="hstamp" style="--r:-3deg"><b>٠٥</b><span>Stages</span></div>
+        <div class="hstamp" style="--r:2deg"><b>١٢</b><span>Client Projects</span></div>
+        <div class="hstamp" style="--r:-2deg"><b>٠٥</b><span>Sectors Served</span></div>
       </div>
     </div>
     <div class="scroll-cue"><span>Scroll</span><span class="ring"></span></div>
@@ -558,9 +561,15 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
     <div class="wrap">
       <p class="eyebrow rv">The problem</p>
       <p class="lede rv" dir="rtl" lang="ar" style="max-width:820px">
-        بداية معظم المشاريع ما تفشل بسبب ضعف الإعلانات، وإنما لأنها تبدأ التسويق بدون هدف واضح أو خطة أو طريقة لقياس النتائج.
+        أغلب المشاريع ما عدها مشكلة بالإعلانات نفسها — المشكلة إنها تبدأ التسويق قبل ما تعرف بالضبط شنو تريد تحقق.
       </p>
-      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
+      <ul class="problem-points rv" dir="rtl" lang="ar">
+        <li>محتوى يُنشر بدون هدف</li>
+        <li>إعلانات تنصرف بدون معيار نجاح واضح</li>
+        <li>أرقام وتفاعل بس ما نعرف تأثيرها على البزنس</li>
+        <li>وماكو <span class="ltr mono">Target</span> نكدر نحاسب التسويق عليه</li>
+      </ul>
+      <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:22px;max-width:760px">
         لهذا السبب بالذات طوّرنا <span class="ltr mono">Slash Target System</span> — نظام تسويقي متكامل يساعد الشركات على تحقيق أهداف واضحة وقابلة للقياس من خلال مراحل عمل تبدأ بتشخيص المشروع، وتحديد الهدف، وبناء الاستراتيجية وتنفيذها، وأخيرًا قياس النتائج وتحسينها باستمرار.
       </p>
 
@@ -601,7 +610,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
       <p class="eyebrow rv">Performance measurement</p>
       <h2 class="h-l rv">How do we measure<br>success?</h2>
       <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
-        نقيس النجاح من خلال مؤشرات أداء واضحة نتفق عليها منذ البداية، مثل عدد العملاء المحتملين وعدد الحجوزات ومعدل التحويل وتكلفة الحصول على العميل ونمو المبيعات والعائد على الإنفاق الإعلاني.
+        من أول يوم نحدد مؤشرات الأداء اللي راح نحاسب النتائج عليها.<br>
+        لأن نجاح التسويق بالنسبة إلنا مو مشاهدات وتفاعل فقط —<br>
+        النجاح هو تأثيره الفعلي على نمو مشروعك.
       </p>
       <div class="kpi-sheet" id="kpiSheet"></div>
       <p class="measure-note rv">// CONCEPTUAL REPRESENTATION — NOT LIVE ACCOUNT DATA</p>
@@ -623,7 +634,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
       <p class="eyebrow rv">Who is this for</p>
       <h2 class="h-l rv" dir="rtl" lang="ar">لمن صُمم هذا النظام؟</h2>
       <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
-        صُمم للشركات التي تبحث عن نمو حقيقي، لا مجرد إدارة حسابات أو إنتاج محتوى — كل المشاريع التي تعتمد على جذب العملاء وتحقيق المبيعات بشكل مستمر.
+        صمم للمشاريع اللي تريد تحول التسويق من مجرد محتوى وإعلانات إلى أداة تحقق هدف واضح.<br>
+        سواء كان هدفك زيادة العملاء أو الحجوزات أو المبيعات،<br>
+        النظام يبني كل الجهود التسويقية حول النتيجة اللي تريد مشروعك يوصل إلها.
       </p>
       <div class="contrast rv" id="contrast"></div>
     </div>
@@ -656,9 +669,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.02em}
   <section class="sec" id="offer">
     <div class="wrap">
       <p class="eyebrow rv">Special offer</p>
-      <h2 class="h-l rv" dir="rtl" lang="ar">العرض الخاص للبدء</h2>
+      <h2 class="h-l rv" dir="rtl" lang="ar">جاهز نحول هدف مشروعك إلى خطة؟</h2>
       <p class="body-ar rv" dir="rtl" lang="ar" style="margin-top:18px;max-width:760px">
-        نقدّم هذا العرض للمشاريع الراغبة في تطبيق <span class="ltr mono">Slash Target System</span> والاستفادة من منهجية عمل مبنية على التخطيط، والتنفيذ، والقياس المستمر، بما يضمن بناء عملية تسويقية أكثر وضوحًا وتنظيمًا.
+        نبدأ بتشخيص مشروعك وتحديد الـ<span class="ltr mono">Target</span>، وبعدها نبني وننفذ الخطة التسويقية المناسبة للوصول إله، وقياس النتائج طوال فترة التعاون.
       </p>
       <div class="offer-panel rv">
         <p class="eyebrow" style="margin-bottom:0">What's included</p>
@@ -771,7 +784,7 @@ const FACTORS=[
   {en:"Available budget",ar:"الميزانية المتاحة"},{en:"Operational capacity",ar:"القدرة التشغيلية"},
   {en:"Cooperation duration",ar:"مدة التعاون"},
 ];
-const QUALITIES=["REALISTIC","CLEAR","MEASURABLE"];
+const QUALITIES=["واقعي","واضح","قابل للقياس"];
 const KPIS=[
   {en:"Leads",ar:"عدد العملاء المحتملين"},{en:"Bookings",ar:"عدد الحجوزات"},
   {en:"Conversion",ar:"معدل التحويل"},{en:"CAC",ar:"تكلفة الحصول على العميل"},
@@ -794,6 +807,10 @@ const PROJECTS=[
   {name:"Nukhba Academy",sector:"Education",filter:"education",url:"https://www.instagram.com/nukhba_academy?igsh=cGsza2Z3MHNqc28x",r:-2},
   {name:"الأستاذ ذو الفقار",sector:"Education",filter:"education",url:null,r:3},
   {name:"Dexa",sector:"Commercial",filter:"commercial",url:"https://www.instagram.com/dexa.iq?igsh=MTNjNmI4aXJvZXhjMw==",r:-3},
+  {name:"مطعم دان",sector:"Commercial",filter:"commercial",url:"https://www.instagram.com/d.a.n.iq?igsh=MTlzaHNuZzN5YXRpcA==&igsi=MTlzaHNuZzN5YXRpcA==",r:2},
+  {name:"مجمع السخاء السكني",sector:"Real Estate",filter:"real-estate",url:"https://www.instagram.com/sakhaa.residential?igsh=MWo1cG9tY3Z5Z25vbQ==&igsi=MWo1cG9tY3Z5Z25vbQ==",r:-2},
+  {name:"ابو حيارة مول",sector:"Real Estate",filter:"real-estate",url:"https://www.instagram.com/abohayara.mall1?igsh=MTRqazNkeHhjdjIxMA==&igsi=MTRqazNkeHhjdjIxMA==",r:3},
+  {name:"مجمع كربلاء التجاري",sector:"Commercial",filter:"commercial",url:"https://www.instagram.com/karbala_cc?igsi=OGFpcHpvdW10bXFx",r:-3},
 ];
 const FILTERS=["All","Real Estate","Medical","Technology","Education","Commercial"];
 const FILTER_MAP={"All":"all","Real Estate":"real-estate","Medical":"medical","Technology":"technology","Education":"education","Commercial":"commercial"};
@@ -823,7 +840,7 @@ const FILTER_MAP={"All":"all","Real Estate":"real-estate","Medical":"medical","T
   $("#factorList").innerHTML = FACTORS.map((f,i)=>`
     <div class="factor"><span class="factor-index">${String(i+1).padStart(2,'0')}</span><span class="factor-en">${f.en}</span><span class="factor-ar" dir="rtl" lang="ar">${f.ar}</span></div>`).join("");
   $("#qualities").innerHTML = QUALITIES.map((q,i)=>`
-    <div class="quality" data-q><span class="badge">${String(i+1).padStart(2,'0')}</span>${q}</div>`).join("");
+    <div class="quality" data-q dir="rtl" lang="ar"><span class="badge">${String(i+1).padStart(2,'0')}</span>${q}</div>`).join("");
 })();
 
 /* ---------- render: KPI sheet ---------- */
@@ -865,7 +882,7 @@ const FILTER_MAP={"All":"all","Real Estate":"real-estate","Medical":"medical","T
   $("#stickers").innerHTML = PROJECTS.map(p=>{
     const link = p.url
       ? `<a class="sticker rv" data-sector="${p.filter}" style="--r:${p.r}deg" href="${p.url}" target="_blank" rel="noopener noreferrer">
-          <span class="s-sector">${p.sector}</span><span class="s-name">${p.name}</span>
+          <span class="s-sector">${p.sector}</span><span class="s-name" dir="auto">${p.name}</span>
           <span class="s-foot"><span class="s-label">View on Instagram</span><span class="s-arrow">↗</span></span>
         </a>`
       : `<div class="sticker rv s-nolink" data-sector="${p.filter}" style="--r:${p.r}deg">
